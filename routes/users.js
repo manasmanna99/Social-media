@@ -11,5 +11,10 @@ router.get('/', function(req,res){
 
 router.get('/profile', usersController.profile);
 
+router.get('/signup', usersController.signUp);
+
+router.get('/signin', usersController.signIn);
+
+router.post('/create', usersController.createUser);
 
 module.exports = router;
