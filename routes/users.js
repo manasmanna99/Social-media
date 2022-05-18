@@ -9,7 +9,7 @@ router.get('/', function(req,res){
     })
 })
 
-router.get('/profile', usersController.profile);
+router.get('/profile', passport.checkAuthentication, usersController.profile);
 
 router.get('/signup', usersController.signUp);
 
@@ -19,7 +19,9 @@ router.post('/create', usersController.createUser);
 
 router.post('/createsession', passport.authenticate(
     'local',
-    { failureRedirect: '/users/signin' }), usersController.CreateSession);
+    { failureRedirect: '/users/signin' }
+    ), usersController.createSession);
 
+router.get('/signout', usersController.destroySession);
 
 module.exports = router;
