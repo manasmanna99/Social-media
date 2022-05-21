@@ -14,14 +14,54 @@
             <% for(post of posts){ %>
                 <li>
                     <p>
+                        <% if(locals.user && locals.user.id == post.user.id){ %>
+                        <small>
+                            <a href="/posts/destroy/<%= post.id %>">X</a>
+                        </small>
+                        <% } %>
                         <%= post.content %>
-                    <small>
-                        by: <%= post.user.name %>
-                    </small>
+                        <small>
+                            by: <%= post.user.name %>
+                        </small>
                     </p>
+
                     
+
+
+                        <div class="post-comments-list">
+                            <ul id="post-comments-<%= post._id %>">
+                                <% for(comment of post.comments){ %>
+                                    <li>
+                                        <p>
+                                            <% if(locals.user && locals.user.id == comment.user.id){ %>
+                                                <small>
+                                                    <a href="/comments/destroy/<%= comment.id %>">X</a>
+                                                </small>
+                                            <% } %>
+                                            <%= comment.content %>
+                                            <small>comment by:<%= comment.user.name %></small>
+                                        </p>
+                                    </li>
+                                <% } %>
+                            </ul>
+                        </div>
+
+                        
+
+                    <div class="post-comments">
+                        <% if(locals.user){ %>
+                            <form action="/comments/create" method="post">
+                                <input type="text" name="content" placeholder="comment here...">
+                                <input type="hidden" name="post" value="<%= post._id %>">
+                                <input type="submit" value="Post comment">
+                            </form>
+                        <% } %>
+                        
+                    </div>
                 </li>
             <% } %>
         </ul>
     </div>
 </section>
+
+<script src="/js/home_posts.js"></script>
