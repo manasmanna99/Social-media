@@ -1,6 +1,7 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
 
+//to de edited for async await and ajax request
 module.exports.create = function(req,res){
     Post.create({
         content: req.body.content,
@@ -11,7 +12,7 @@ module.exports.create = function(req,res){
             return;
         }
         return res.redirect('back');
-    })
+    });
 }
 
 module.exports.destroy = function(req , res){

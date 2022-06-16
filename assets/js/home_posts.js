@@ -19,6 +19,13 @@
         });
     }
 
+    //method to create a post in DOM
+    let newPostDom = function(post){
+        
+    }
+
+
+
 
     createPost();
 }
