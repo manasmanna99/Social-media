@@ -51,7 +51,7 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"></script>
 <% if(locals.user){ %>
-    <script src="<%= assetPath('/js/chat_engine.js') %>"></script>
+    <script src="<%= assetPath('js/chat_engine.js') %>"></script>
     <script>
         new ChatEngine('user-chat-box' , '<%= locals.user.name %>')
     </script>
