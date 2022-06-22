@@ -73,7 +73,7 @@ app.use(session({
     },
     //mongostore is used to store the session cookie in the db
     store: MongoStore.create({             
-        mongoUrl: `mongodb://54.164.46.234/${env.MongoStore}`,
+        mongoUrl: `mongodb://localhost/${env.MongoStore}`,
         autoRemove: 'disabled'
     },
     function(err){
