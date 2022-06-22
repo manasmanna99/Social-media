@@ -16,7 +16,7 @@ const development = {
     asset_path: './assets',
     session_cookie_key: 'blahsomething',
     db: 'codeial_development',
-    mongoStore: 'mongodb://localhost/codeial_development',
+    mongoStore: 'codeial_development',
     smtp: {
         service: 'gmail',
         host: 'smtp.gmail.com',
@@ -29,7 +29,7 @@ const development = {
     },
     google_clientID: "169062748545-r334v7d3hth7cv88ld05upjbgnuik9u6.apps.googleusercontent.com",
     google_clientSecret: "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",
-    google_callbackURL: "http://localhost:8000/users/auth/google/callback",
+    google_callbackURL: "https://54.164.46.234:8000/users/auth/google/callback",
     jwt_secret: 'codeial',
     morgan: {
         mode: 'dev',
@@ -42,7 +42,7 @@ const production = {
     asset_path: process.env.CODEIAL_ASSET_PATH,
     session_cookie_key: process.env.CODEIAL_SESSION_COOKIE_KEY,
     db: process.env.CODEIAL_DB,
-    mongoStore: 'mongodb://localhost/codeial_production',
+    mongoStore: 'codeial_production',
     smtp: {
         service: 'gmail',
         host: 'smtp.gmail.com',

@@ -53,6 +53,6 @@
 <% if(locals.user){ %>
     <script src="<%= assetPath('/js/chat_engine.js') %>"></script>
     <script>
-        new ChatEngine('user-chat-box' , '<%= locals.user.email %>')
+        new ChatEngine('user-chat-box' , '<%= locals.user.name %>')
     </script>
 <%}%>

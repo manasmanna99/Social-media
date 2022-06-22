@@ -40,7 +40,7 @@ if(env.name == 'development'){
 
 app.use(logger(env.morgan.mode, env.morgan.options));
 
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: false}));
 
 app.use(cookieParser());
 
@@ -73,7 +73,7 @@ app.use(session({
     },
     //mongostore is used to store the session cookie in the db
     store: MongoStore.create({             
-        mongoUrl: env.mongoStore,
+        mongoUrl: `mongodb://54.164.46.234/${env.MongoStore}`,
         autoRemove: 'disabled'
     },
     function(err){
