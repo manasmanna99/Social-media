@@ -835,3 +835,10 @@
 ::1 - - [22/Jun/2022:22:40:18 +0000] "GET /css/header-5624c7deef.css HTTP/1.1" 304 - "http://localhost:8000/users/sign-in" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
 ::1 - - [22/Jun/2022:22:40:18 +0000] "GET /css/footer-80b8801692.css HTTP/1.1" 304 - "http://localhost:8000/users/sign-in" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
 ::1 - - [22/Jun/2022:22:40:18 +0000] "GET /users/sign-in HTTP/1.1" 200 2153 "http://localhost:8000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+[0mGET / [32m200[0m 74.268 ms - 5823[0m
+[0mGET /js/home_post_comments.js [32m200[0m 582.610 ms - 3760[0m
+[0mGET /js/home_posts.js [32m200[0m 8.631 ms - 4586[0m
+[0mGET /js/home_posts.js [36m304[0m 10.139 ms - -[0m
+[0mGET /js/toggle_likes.js [32m200[0m 15.303 ms - 1197[0m
+[0mGET /js/toggle_likes.js [36m304[0m 1.187 ms - -[0m
+[0mGET /images/chat.ico [32m200[0m 0.767 ms - 16958[0m
