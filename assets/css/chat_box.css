@@ -18,6 +18,7 @@
       text-align: left;
       padding: 5px; }
       #user-chat-box #chat-messages-list .other-message span {
+        border-radius: 30px;
         display: inline-block;
         padding: 15px;
         background-color: #ffa0a0; }
@@ -25,9 +26,12 @@
       text-align: right;
       padding: 5px; }
       #user-chat-box #chat-messages-list .self-message span {
+        border-radius: 30px;
         display: inline-block;
         padding: 15px;
         background-color: #a0dcff; }
+  #user-chat-box #chat-messages-list::-webkit-scrollbar {
+    display: none; }
   #user-chat-box #chat-message-input-container {
     height: 24%;
     width: 100%;

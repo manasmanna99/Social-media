@@ -33,6 +33,7 @@ class PostComments{
                 data: $(self).serialize(),
                 success: function(data){
                     let newComment = pSelf.newCommentDom(data.data.comment);
+                    document.getElementById('comment-box').value = '';
                     $(`#post-comments-${postId}`).prepend(newComment);
                     pSelf.deleteComment($(' .delete-comment-button', newComment));
 
@@ -59,7 +60,7 @@ class PostComments{
 
     newCommentDom(comment){
         // CHANGE :: show the count of zero likes on this comment
-
+        
         return $(`<li id="comment-${ comment._id }">
                         <p>
                             

@@ -2,12 +2,12 @@ module.exports.chatSockets = function (socketServer) {
 
     const io = require('socket.io')(socketServer, {
         cors: {
-            origin: "http://manchat.life",
+            origin: "http://localhost:8000",
             methods: ["GET", "POST"]
         }
     });
     io.on('connection', function (socket) {
-        console.log('new connection received', socket.id);
+        // console.log('new connection received', socket.id);
 
         socket.on('disconnect', function () {
             console.log('socket disconnected');
@@ -15,7 +15,7 @@ module.exports.chatSockets = function (socketServer) {
         });
 
         socket.on('join_room', function (data) {
-            console.log('Joining request rec.', data);
+            // console.log('Joining request rec.', data);
 
             socket.join(data.chatroom);
 
