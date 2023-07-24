@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const env = require('./environment');
 
 // Create the connection string.
-const connectionString = `mongodb+srv://manas:manas123@cluster0.hha0ca6.mongodb.net/${env.db}?retryWrites=true&w=majority`;
+const connectionString = `mongodb+srv://manas:manas123@cluster0.j932clv.mongodb.net/${env.db}?retryWrites=true&w=majority`;
 
 // Connect to the MongoDB Atlas cluster using a promise.
 const promise = mongoose.connect(connectionString, {useNewUrlParser: true});
