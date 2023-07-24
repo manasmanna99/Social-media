@@ -1,20 +1,19 @@
+// require the library
 const mongoose = require('mongoose');
-const env = require('./environment');
 
-// Create the connection string.
-const connectionString = `mongodb+srv://manas:manas123@cluster0.j932clv.mongodb.net/${env.db}?retryWrites=true&w=majority`;
+// connect to the database
+mongoose.connect('mongodb+srv://manas:manas123@cluster0.j932clv.mongodb.net/codialsocial?retryWrites=true&w=majority');
 
-// Connect to the MongoDB Atlas cluster using a promise.
-const promise = mongoose.connect(connectionString, {useNewUrlParser: true});
+// aquire the connection (to check if it is successful)
+const db = mongoose.connection;
 
-// Resolve the promise when the connection is established.
-promise.then(() => {
-  console.log("Database Connection established");
+// error
+db.on('error', console.error.bind(console, "Error in connecting to MongoDB"));
+
+// up and running then print the message
+db.once('open', function(){
+    console.log('Connected to Database');
 });
 
-// Reject the promise if the connection fails.
-promise.catch(err => {
-  console.error(err);
-});
-
-module.exports = promise;
+// exporting the database
+module.exports = db;
