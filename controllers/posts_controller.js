@@ -36,7 +36,7 @@ module.exports.create = async function(req, res){
 
 
 module.exports.destroy = async function(req, res){
-
+console.log("comming to post");
     try{
         let post = await Post.findById(req.params.id);
 
@@ -47,8 +47,7 @@ module.exports.destroy = async function(req, res){
             await Like.deleteMany({_id: {$in: post.comments}});
 
 
-            post.remove();
-
+            await post.deleteOne();
             await Comment.deleteMany({post: req.params.id});
 
 

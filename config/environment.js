@@ -29,7 +29,7 @@ const development = {
     },
     google_clientID: "169062748545-r334v7d3hth7cv88ld05upjbgnuik9u6.apps.googleusercontent.com",
     google_clientSecret: "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",
-    google_callbackURL: "http://localhost:8000/users/auth/google/callback",
+    // google_callbackURL: "http://localhost:8000/users/auth/google/callback",
     google_callbackURL: "https://social-43wq.onrender.com/users/auth/google/callback",
     jwt_secret: 'codeial',
     morgan: {

@@ -7,15 +7,18 @@
 class PostComments{
     // constructor is used to initialize the instance of the class whenever a new instance is created
     constructor(postId){
+
         this.postId = postId;
         this.postContainer = $(`#post-${postId}`);
         this.newCommentForm = $(`#post-${postId}-comments-form`);
-
+        // console.log("postid",postId);
+        // console.log("inside home comments",this.newCommentForm,this.newCommentDom);
         this.createComment(postId);
 
         let self = this;
         // call for all the existing comments
-        $(' .delete-comment-button', this.postContainer).each(function(){
+        $('.delete-comment-button', this.postContainer).each(function(){
+            console.log($(this));
             self.deleteComment($(this));
         });
     }
@@ -71,7 +74,7 @@ class PostComments{
                             ${comment.content}
                             <br>
                             <small>
-                                ${comment.user.name}
+                                <i>-${comment.user.name}</i>
                             </small>
                             <small>
                             

@@ -3,8 +3,8 @@ class ChatEngine {
         this.chatBox = $(`#${chatBoxId}`);
         this.userEmail = userEmail;
 
-        // this.socket = io.connect('http://:5000');
-        this.socket = io.connect('https://:5000');
+        this.socket = io.connect('http://:5000');
+        // this.socket = io.connect('https://:5000');
 
         if (this.userEmail) {
             this.connectionHandler();
@@ -17,7 +17,6 @@ class ChatEngine {
         let self = this;
 
         this.socket.on('connect', function () {
-            console.log('connection established using sockets...!');
 
 
             self.socket.emit('join_room', {
@@ -26,7 +25,7 @@ class ChatEngine {
             });
 
             self.socket.on('user_joined', function (data) {
-                console.log('a user joined!');
+                console.log('');
             })
 
 

@@ -2,7 +2,7 @@ const Comment = require('../models/comment');
 const Post = require('../models/post');
 const commentsMailer = require('../mailers/comments_mailer');
 const Like = require('../models/like');
-
+const User = require('../models/user')
 
 module.exports.create = async function(req, res){
 
@@ -19,8 +19,9 @@ module.exports.create = async function(req, res){
             post.comments.push(comment);
             post.save();
 
-            comment = await comment.populate(['user']);
-            commentsMailer.newComment(comment);
+            comment = await comment.populate(['user','post']);
+            comment.post.user = await User.findById(comment.post.user);
+            // commentsMailer.newComment(comment);
             if (req.xhr){
                 // Similar for comments to fetch the user's id!
                
@@ -55,9 +56,9 @@ module.exports.destroy = async function(req, res){
 
             let postId = comment.post;
 
-            comment.remove();
+            await comment.deleteOne();
 
-            let post = Post.findByIdAndUpdate(postId, { $pull: {comments:{_id: req.params.id}}});
+            await Post.findByIdAndUpdate(postId, { $pull: {comments:{_id: req.params.id}}});
 
             //destroy the associated likes for this comment
             await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});

@@ -19,7 +19,11 @@ module.exports.home = async function(req, res){
                 path:  'likes'
             }
         }).populate('likes');
-        console.log(posts);
+        posts.forEach((post)=>{
+            post.comments.forEach(async (comment)=>{
+                comment.user = await User.findById(comment.user)
+            })
+        })
         let users = await User.find({});
 
         return res.render('home', {
