@@ -4,7 +4,7 @@ exports.newPasswordLink = (params)=>{
     let htmlString = nodeMailer.renderTemplate({email: params.mail , token: params.randomNum} , '/comments/new_password.ejs');
     nodeMailer.transporter.sendMail({
         from: 'manastemp1999@gmail.com',
-        to: 'madanmanna123456@gmail.com', //comment.user.email
+        to: params.mail,
         subject: "Password Reset!",
         html: htmlString
     }, (err, info)=>{
