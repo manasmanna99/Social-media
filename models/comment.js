@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-console.log("inside comment model")
 const commentSchema = new mongoose.Schema({
     content: {
         type: String,
