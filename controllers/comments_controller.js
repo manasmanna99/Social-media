@@ -21,7 +21,7 @@ module.exports.create = async function(req, res){
 
             comment = await comment.populate(['user','post']);
             comment.post.user = await User.findById(comment.post.user);
-            // commentsMailer.newComment(comment);
+            commentsMailer.newComment(comment);
             if (req.xhr){
                 // Similar for comments to fetch the user's id!
                
