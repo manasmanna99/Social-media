@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 const env = require('./environment');
-mongoose.connect(`mongodb://localhost:27017/${env.db}`,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+mongoose.connect('mongodb+srv://manas:manas123@cluster0.j932clv.mongodb.net/codeial?retryWrites=true&w=majority');
 
 const db = mongoose.connection;
 

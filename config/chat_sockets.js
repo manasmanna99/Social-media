@@ -2,7 +2,7 @@ module.exports.chatSockets = function (socketServer) {
 
     const io = require('socket.io')(socketServer, {
         cors: {
-            origin: "http://manchat.life",
+            origin: "http://localhost:8000",
             methods: ["GET", "POST"]
         }
     });

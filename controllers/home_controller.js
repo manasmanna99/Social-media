@@ -19,7 +19,7 @@ module.exports.home = async function(req, res){
                 path:  'likes'
             }
         }).populate('likes');
-    
+        console.log(posts);
         let users = await User.find({});
 
         return res.render('home', {

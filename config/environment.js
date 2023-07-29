@@ -18,13 +18,13 @@ const development = {
     db: 'codeial_development',
     mongoStore: 'codeial_development',
     smtp: {
-        service: 'gmail',
+        // service: 'gmail',
         host: 'smtp.gmail.com',
         port: 587,
         secure: false,
         auth: {
             user: 'manastemp1999@gmail.com',
-            pass: 'Manastemp@123'
+            pass: 'irlcdavkuvsdlary'
         }
     },
     google_clientID: "169062748545-r334v7d3hth7cv88ld05upjbgnuik9u6.apps.googleusercontent.com",

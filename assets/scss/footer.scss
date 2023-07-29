@@ -1,5 +1,6 @@
 #layout-footer{
     color: white;
+    display: fixed;
     a{
         color: white;
         text-decoration: none;
@@ -7,7 +8,6 @@
 
     background: grey;
     padding: 5px 10px;
-    display: flex;
     justify-content: flex-start;
 
     .footer-nav{

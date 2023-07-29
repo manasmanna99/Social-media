@@ -11,10 +11,11 @@ const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+
 const passportJWT = require('./config/passport-jwt-strategy');
 const passportGoogle = require('./config/passport-google-oauth2-strategy');
 const MongoStore = require('connect-mongo');
-const sassMiddleware = require('node-sass-middleware');
+
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
 //setup the chat server to be used with socket.io
@@ -22,14 +23,9 @@ const chatServer = require('http').Server(app);
 const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000);
 console.log('chat server is listening on port 5000');
-
 if(env.name == 'development'){
-    app.use(sassMiddleware({
-        src: './assets/scss',
-        dest: './assets/css',
-        prefix: '/css'
-    }));
-}
+    console.log("Hosted in development mode");
+}else console.log("Hosted in production mode");
 
 
 
@@ -73,7 +69,7 @@ app.use(session({
     },
     //mongostore is used to store the session cookie in the db
     store: MongoStore.create({             
-        mongoUrl: `mongodb://localhost/${env.MongoStore}`,
+        mongoUrl: `mongodb://localhost/codeial_development`,
         autoRemove: 'disabled'
     },
     function(err){

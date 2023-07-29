@@ -10,21 +10,21 @@ passport.use(new LocalStrategy({
         usernameField: 'email',
         passReqToCallback: true
     },
-    function(req, email, password, done){
+    async function(req, email, password, done){
         // find a user and establish the identity
-        User.findOne({email: email}, function(err, user)  {
-            if (err){
-                req.flash('error', err);
-                return done(err);
-            }
+        try{
 
-            if (!user || user.password != password){
-                req.flash('error', 'Invalid Username/Password');
-                return done(null, false);
-            }
-
-            return done(null, user);
-        });
+            let user = await User.findOne({email: email});
+    
+                if (!user || user.password != password){
+                    req.flash('error', 'Invalid Username/Password');
+                    return done(null, false);
+                }
+    
+                return done(null, user);
+        }catch(err){
+            console.log("error in signin",err);
+        }
     }
 
 
@@ -39,15 +39,14 @@ passport.serializeUser(function(user, done){
 
 
 // deserializing the user from the key in the cookies
-passport.deserializeUser(function(id, done){
-    User.findById(id, function(err, user){
-        if(err){
-            console.log('Error in finding user --> Passport');
-            return done(err);
-        }
+passport.deserializeUser(async function(id, done){
+    try{
+        let user = await User.findById(id);
 
         return done(null, user);
-    });
+    }catch(err){
+        console.log("error in deserialize",err);
+    }
 });
 
 

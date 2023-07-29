@@ -7,25 +7,7 @@ const uglify = require('gulp-uglify-es').default;
 const imagemin = require('gulp-imagemin');
 const del = require('del');
 
-
-
-gulp.task('css', function(done){
-    console.log('minifying css...');
-    gulp.src('./assets/sass/**/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(cssnano())
-    .pipe(gulp.dest('./assets.css'));
-
-     gulp.src('./assets/**/*.css')
-    .pipe(rev())
-    .pipe(gulp.dest('./public/assets'))
-    .pipe(rev.manifest({
-        cwd: 'public',
-        merge: true
-    }))
-    .pipe(gulp.dest('./public/assets'));
-    done();
-});
+// npm install gulp-imagemin@7.1.0 gulp-uglify-es@3.0.0
 
 
 gulp.task('js', function(done){
@@ -33,15 +15,37 @@ gulp.task('js', function(done){
      gulp.src('./assets/**/*.js')
     .pipe(uglify())
     .pipe(rev())
-    .pipe(gulp.dest('./public/assets'))
-    .pipe(rev.manifest({
-        cwd: 'public',
+    .pipe(gulp.dest('./public/assets/'))
+    .pipe(rev.manifest('public/assets/rev-manifest.json',{
+        // cwd: 'public',
+        base: './public/assets',
         merge: true
     }))
-    .pipe(gulp.dest('./public/assets'));
+    .pipe(gulp.dest('./public/assets/'))
+
     done()
 });
 
+
+
+gulp.task('css', function(done){
+    console.log('minifying css...');
+    gulp.src('./assets/sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(cssnano())
+    .pipe(gulp.dest('./assets/css'));
+
+     gulp.src('./assets/**/*.css')
+    .pipe(rev())
+    .pipe(gulp.dest('./public/assets/'))
+    .pipe(rev.manifest('public/assets/rev-manifest.json',{
+        // cwd: 'public',
+        base: './public/assets',
+        merge: true
+    }))
+    .pipe(gulp.dest('./public/assets/'));
+    done();
+});
 
 gulp.task('images', function(done){
     console.log('compressing images...');
@@ -49,8 +53,8 @@ gulp.task('images', function(done){
     .pipe(imagemin())
     .pipe(rev())
     .pipe(gulp.dest('./public/assets'))
-    .pipe(rev.manifest({
-        cwd: 'public',
+    .pipe(rev.manifest('public/assets/rev-manifest.json',{
+        base: './public/assets',
         merge: true
     }))
     .pipe(gulp.dest('./public/assets'));

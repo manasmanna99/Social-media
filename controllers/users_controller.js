@@ -1,15 +1,20 @@
 const User = require('../models/user');
+const Reset = require('../models/reset_password');
 const fs = require('fs');
 const path = require('path');
+const passwordMailer = require('../mailers/password_reset_mailer');
 
 // let's keep it same as before
-module.exports.profile = function(req, res){
-    User.findById(req.params.id, function(err, user){
-        return res.render('user_profile', {
-            title: 'User Profile',
-            profile_user: user
-        });
-    });
+module.exports.profile = async function(req, res){
+    try{
+        let user = await User.findById(req.params.id);
+            return res.render('user_profile', {
+                title: 'User Profile',
+                profile_user: user
+            });
+    }catch(err){
+        console.log("error in profile controller",err);
+    }
 
 }
 
@@ -80,27 +85,25 @@ module.exports.signIn = function(req, res){
 }
 
 // get the sign up data
-module.exports.create = function(req, res){
-    if (req.body.password != req.body.confirm_password){
-        req.flash('error', 'Passwords do not match');
-        return res.redirect('back');
-    }
-
-    User.findOne({email: req.body.email}, function(err, user){
-        if(err){req.flash('error', err); return}
-
-        if (!user){
-            User.create(req.body, function(err, user){
-                if(err){req.flash('error', err); return}
-
-                return res.redirect('/users/sign-in');
-            })
-        }else{
-            req.flash('success', 'You have signed up, login to continue!');
+module.exports.create = async function(req, res){
+    try{
+        if (req.body.password != req.body.confirm_password){
+            req.flash('error', 'Passwords do not match');
             return res.redirect('back');
         }
-
-    });
+    
+        let user = await User.findOne({email: req.body.email});
+            if (!user){
+                user = await User.create(req.body);
+                return res.redirect('/users/sign-in');
+            }else{
+                req.flash('success', 'You have signed up, login to continue!');
+                return res.redirect('/users/sign-in');
+            }
+    }catch(err){
+        console.log("Error in creating user",err);
+        return;
+    }
 }
 
 
@@ -121,4 +124,102 @@ module.exports.destroySession = function(req, res){
     return res.redirect('/');
 }
 
+module.exports.forgotpassword = function(req,res){
+    return res.render('forget_password',{
+        title: "Codeial | Forgot Password"
+    });
+}
 
+module.exports.forgotemail = async function(req, res){
+    try{
+        let user = await User.findOne({email:req.body.email});
+        if(user){
+            let updatetoken = await Reset.findOne({email: req.body.email});
+            let randomNum = Math.round(Math.random()*10000000);
+            let mail = user.email;
+            // if(updatetoken){
+            //     updatetoken.accessToken = randomNum;
+            //     updatetoken.expireIn = new Date().getTime() * 200 *1000;
+            //     passwordMailer.newPasswordLink({mail,randomNum});
+            //     req.flash('success', 'Link sent to email');
+            //     return res.redirect('/');
+            // }else{
+                Reset.create({
+                    email: req.body.email,
+                    accessToken: randomNum,
+                    expireIn: new Date().getTime() * 200 *1000
+                }, function(err, user){
+                    if(err){req.flash('error', err); return}
+                    passwordMailer.newPasswordLink({mail,randomNum});
+                    req.flash('success', 'Link sent to email');
+    
+                    return res.redirect('/');
+                })
+            // }
+        }else{
+            req.flash('error', 'Email id not found');
+            return res.redirect('/');
+        }
+
+    }catch(err){
+        console.log(err);
+    }
+}
+
+module.exports.updatepassword = async function(req,res){
+    try{
+
+        let granted = await Reset.findOne({email:req.body.email});
+        if(granted){
+            if(req.body.password != req.body.confirm_password){
+                req.flash('error', 'Passwords do not match');
+                return res.redirect('/');
+            }
+            User.findOneAndUpdate({email: req.body.email},
+                {password:req.body.password}, function(err,user){
+                    if(err) console.log(err);
+                    req.flash('success', 'Password changed successfully');
+                    granted.remove();
+                    return res.redirect('/');
+                });
+        }else{
+            req.flash('error', 'Not have permission');
+            return res.redirect('/');
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
+
+module.exports.passpage = async function(req, res){
+    try{
+        let user = await User.findOne({email:req.query.email});
+        if(user){
+            let passcheck = await Reset.findOne({email:req.query.email});
+            if(passcheck){
+                if(passcheck.accessToken == req.query.token){
+                    if(passcheck.expireIn - new Date().getTime() < 0){
+                        req.flash('error', 'Token expired');
+                        passcheck.remove();
+                        res.redirect('/');
+                    }else{
+                        return res.render('createpassword',{
+                            title: 'Create Password',
+                            email: req.query.email
+                        })
+                    }
+                }else{
+                    req.flash('error', 'Invalid token');
+                    res.redirect('/');
+                }
+            }
+        }else{
+            req.flash('error', 'Email id not found');
+            return res.redirect('/');
+        }
+
+    }catch(err){
+        console.log(err);
+    }
+}

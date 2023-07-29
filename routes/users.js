@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 
 const usersController = require('../controllers/users_controller');
-
+// console.log(passport.checkAuthentication);
 router.get('/profile/:id', passport.checkAuthentication, usersController.profile);
 router.post('/update/:id', passport.checkAuthentication, usersController.update);
 
@@ -19,6 +19,10 @@ router.post('/create-session', passport.authenticate(
     {failureRedirect: '/users/sign-in'},
 ), usersController.createSession);
 
+router.get('/forget-password', usersController.forgotpassword);
+router.post('/forgotemail', usersController.forgotemail);
+router.get('/newpassword', usersController.passpage);
+router.post('/updatepassword', usersController.updatepassword);
 
 router.get('/sign-out', usersController.destroySession);
 
@@ -29,3 +33,5 @@ router.get('/auth/google/callback', passport.authenticate('google', {failureRedi
 
 
 module.exports = router;
+
+

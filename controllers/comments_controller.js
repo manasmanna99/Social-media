@@ -20,7 +20,7 @@ module.exports.create = async function(req, res){
             post.save();
 
             comment = await comment.populate(['user']);
-            // commentsMailer.newComment(comment)
+            commentsMailer.newComment(comment);
             if (req.xhr){
                 // Similar for comments to fetch the user's id!
                
@@ -57,7 +57,7 @@ module.exports.destroy = async function(req, res){
 
             comment.remove();
 
-            let post = Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
+            let post = Post.findByIdAndUpdate(postId, { $pull: {comments:{_id: req.params.id}}});
 
             //destroy the associated likes for this comment
             await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
