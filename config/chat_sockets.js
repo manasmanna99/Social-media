@@ -2,7 +2,7 @@ module.exports.chatSockets = function (socketServer) {
 
     const io = require('socket.io')(socketServer, {
         cors: {
-            origin: "http://localhost:8000",
+            origin: "https://social-43wq.onrender.com:8000",
             methods: ["GET", "POST"]
         }
     });
